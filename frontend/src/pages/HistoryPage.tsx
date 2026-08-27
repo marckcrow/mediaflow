@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { EmptyState } from '@/components/shared/EmptyState'
 import { mockProcessingJobs } from '@/mocks/mockData'
-import { formatDate, formatDuration, formatDateTime } from '@/lib/utils'
+import { formatDate, formatDuration, formatDateTime, slugify } from '@/lib/utils'
 import type { ProcessingJob, FilterType } from '@/types'
 
 const statusConfig = {
@@ -34,6 +34,38 @@ export function HistoryPage() {
 
   const deleteJob = (id: string) => {
     setJobs(prev => prev.filter(j => j.id !== id))
+  }
+
+  // Generate and download a file for a completed job
+  const handleHistoryDownload = (job: ProcessingJob) => {
+    const ext = job.format === 'mp3' ? 'mp3' : job.format === 'm4a' ? 'm4a' : job.format === 'webm' ? 'webm' : 'mp4'
+    const fileName = `${slugify(job.title)}.${ext}`
+
+    // Generate a text placeholder file with metadata
+    const lines = [
+      `MediaFlow - Arquivo Processado`,
+      ``,
+      `Titulo: ${job.title}`,
+      `Formato: ${job.formatLabel}`,
+      `Tamanho: ${job.fileSize ?? "N/A"}`,
+      `Fonte: ${job.sourceName}`,
+      `Data: ${new Date().toLocaleString("pt-BR")}`,
+      ``,
+      `Este e um arquivo placeholder gerado pelo MediaFlow.`,
+      `Em producao, o arquivo de midia real seria baixado aqui.`,
+    ]
+    const fileContent = lines.join("\r\n")
+
+    const blob = new Blob([fileContent], { type: "text/plain;charset=utf-8" })
+    const url = URL.createObjectURL(blob)
+
+    const a = document.createElement("a")
+    a.href = url
+    a.download = fileName
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
   }
 
   const filtered = jobs.filter(job => {
@@ -138,7 +170,11 @@ export function HistoryPage() {
                                 <Star size={14} className={favorites.has(job.id) ? 'text-yellow-400 fill-yellow-400' : 'text-slate-500'} />
                               </button>
                               {job.status === 'completed' && (
-                                <button className="p-1.5 rounded-md hover:bg-surface-dark text-slate-500 hover:text-white transition-colors" title="Baixar">
+                                <button
+                                  className="p-1.5 rounded-md hover:bg-surface-dark text-slate-500 hover:text-white transition-colors"
+                                  title="Baixar"
+                                  onClick={() => handleHistoryDownload(job)}
+                                >
                                   <Download size={14} />
                                 </button>
                               )}
@@ -181,7 +217,7 @@ export function HistoryPage() {
                         </div>
                         <div className="flex gap-2">
                           {job.status === 'completed' && (
-                            <Button size="sm" variant="default" className="flex-1 gap-1.5" onClick={() => {}}>
+                            <Button size="sm" variant="default" className="flex-1 gap-1.5" onClick={() => handleHistoryDownload(job)}>
                               <Download size={14} /> Baixar
                             </Button>
                           )}
