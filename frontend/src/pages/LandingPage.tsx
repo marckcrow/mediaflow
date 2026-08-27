@@ -86,14 +86,9 @@ export function LandingPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style={{ animationDelay: '200ms' }}>
-            <Link to="/register">
-              <Button size="lg" className="w-full sm:w-auto gap-2 shadow-glow text-base px-8">
-                <Play size={16} /> Começar agora
-              </Button>
-            </Link>
             <Link to="/login">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto text-base px-8">
-                Já tenho conta
+              <Button size="lg" className="w-full sm:w-auto gap-2 shadow-glow text-base px-8">
+                <Play size={16} /> Entrar
               </Button>
             </Link>
           </div>
@@ -165,14 +160,14 @@ export function LandingPage() {
             <p className="text-slate-400 mb-8">
               Crie sua conta gratuitamente e comece a processar suas mídias em segundos.
             </p>
-            <Link to="/register">
+            <Link to="/login">
               <Button size="lg" className="gap-2 shadow-glow text-base px-10">
-                Criar conta grátis <ArrowRight size={16} />
+                Acessar MediaFlow <ArrowRight size={16} />
               </Button>
             </Link>
             <div className="flex items-center justify-center gap-6 mt-6 text-xs text-slate-500">
               <span className="flex items-center gap-1"><Check size={12} className="text-emerald-400" /> Sem cartão de crédito</span>
-              <span className="flex items-center gap-1"><Check size={12} className="text-emerald-400" /> Plano Free incluso</span>
+              <span className="flex items-center gap-1"><Check size={12} className="text-emerald-400" /> Registro em breve</span>
             </div>
           </div>
         </div>
