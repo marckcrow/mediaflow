@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from 'uuid'
 export const userRouter = Router()
 
 // Mock auth middleware stub (replace with real JWT validation)
-function authMiddleware(req: any, res: any, next: any) {
+function authMiddleware(req: any, _res: any, next: any) {
   // TODO: Validate JWT, set req.user
-  req.user = { id: 'usr_001', isAdmin: false }
+  ;(req as any).user = { id: 'usr_001', isAdmin: false }
   next()
 }
 
