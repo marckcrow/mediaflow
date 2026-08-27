@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border-dark;
+  }
+
+  body {
+    @apply bg-bg-dark text-slate-100 font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  .light {
+    @apply bg-bg-light text-slate-900;
+  }
+
+  .light * {
+    @apply border-border-light;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/40 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/60;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-surface-dark/80 backdrop-blur-md border border-border-dark;
+  }
+
+  .glow-border {
+    @apply border border-primary/30 shadow-glow;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  .shimmer {
+    @apply relative overflow-hidden;
+  }
+
+  .shimmer::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255,255,255,0.08) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
