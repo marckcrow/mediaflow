@@ -298,6 +298,7 @@ export function DashboardPage() {
           fileSize={fileSize}
           duration={media.duration}
           thumbnail={media.thumbnail}
+          sourceUrl={media.url}
           onReset={handleReset}
         />
       )}
