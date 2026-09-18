@@ -17,6 +17,7 @@ export interface AnalyzedMedia {
   date: string
   status: SourceStatus
   availableFormats: FormatOption[]
+  authorName?: string   // Channel/author name (from oEmbed)
   error?: string
 }
 
